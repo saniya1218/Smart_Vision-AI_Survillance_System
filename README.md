@@ -190,3 +190,14 @@ Weapon model boxes are candidates for human review, not proof of a weapon. The p
 
 The three user supplied fall clips were each processed once on CPU and are saved under `verification/fall_samples/` with annotated outputs. They produced zero medical incidents, so no siren sounded. The siren is dispatched when the medical detector emits a confirmed MEDICAL incident; the code path is covered by self-tests. The supplied clips show that fall recognition itself remains unreliable: pose labels missed the down-person posture in reviewed frames, and one reviewed person was clipped by the frame edge, which the current medical safety filter excludes. See the fall-video table in `VERIFICATION.md`. Do not claim these clips demonstrate successful fall detection or siren triggering.
 
+## Institution
+
+This project is developed as part of the academic activities at **Sai Vidya Institute of Technology (SVIT), Bengaluru, Karnataka, India**.
+
+**Sai Vidya Institute of Technology (SVIT)** is an engineering institution dedicated to technical education, innovation, research, and practical learning. The institution encourages students to apply their technical knowledge to real-world problems through academic projects, collaborative learning, and technological development.
+
+**Institution Name:** Sai Vidya Institute of Technology  
+**Abbreviation:** SVIT  
+**Location:** Bengaluru, Karnataka, India  
+**Official Website:** https://saividya.ac.in/
+
