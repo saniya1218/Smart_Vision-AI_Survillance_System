@@ -1,6 +1,6 @@
-# VantaWatch AI
+# SMART VISION
 
-VantaWatch is a classroom CCTV safety demo that combines YOLO person tracking, weapon detection, pose and motion rules, an explainable LOW/MEDIUM/HIGH threat score, medical heuristics, evidence capture, and local police/hospital dashboards. Human review is required before any real response.
+SMART VISION is a CCTV safety demo that combines YOLO person tracking, weapon detection, pose and motion rules, an explainable LOW/MEDIUM/HIGH threat score, medical heuristics, evidence capture, and local police/hospital dashboards. Human review is required before any real response.
 
 ## Architecture
 
