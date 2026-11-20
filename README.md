@@ -141,25 +141,6 @@ Alerts are decision support. A human operator must inspect the live scene and ev
 
 The earlier 30-clip model-backed passes at 0.40 and 0.75 are historical results. The latest reduced replay uses 5 clips/folder at 150 cached frames/clip; it produced 0/5 Weaponized police alerts, 0/5 Normal police alerts, and 1/5 Violence police alert. The one alert frame was visually uncertain, not a verified weapon.
 
-## Viva Q&A
-
-1. **Why two sub-scores?** They make weapon evidence and behavior evidence independently understandable.
-2. **Why six confirm frames?** To reject one-frame detections; tune it to the camera frame rate and latency.
-3. **Why body-heights per second?** It normalizes motion across image scale and elapsed time.
-4. **Why a pre-event buffer?** It preserves context before the alert condition becomes confirmed.
-5. **Why a notifier thread?** Network timeouts should not stop frame processing.
-6. **How are false alarms reduced?** Confidence filters, geometric person-weapon association, persistence, thresholds, and human review.
-7. **How does GPS work?** A phone browser posts geolocation fixes over HTTPS; the server uses recent fixes and otherwise camera coordinates.
-8. **How would it scale to many cameras?** Run one inference worker per camera and centralize authenticated event transport and storage.
-9. **Why is blood detection limited?** It uses HSV color ratios, not learned tissue/object recognition.
-10. **Can police be dispatched automatically?** No real police integration is included; an official API and legal approval would be required.
-11. **Why require two weapon samples?** A one-frame pistol detection at 0.428 confidence covered almost the whole 163343 image; the persistence rule rejects that transient box.
-12. **What does frame skipping trade off?** It reduced processing time on the longer clips but missed a transient event in the 4-frame 163318 clip, so the cadence must be chosen for the camera and event duration.
-13. **Does it meet real-time speed?** No. On the CPU-only Intel i3-1005G1, the final 100-frame benchmark measured 1.13 FPS; the best observed full-pipeline clip rate was 3.54 FPS. It misses the 8 FPS target.
-14. **What were the latest replay results?** On 5 cached clips per folder, final replay produced 0/5 Weaponized police alerts, 0/5 Normal police alerts, and 1/5 Violence police alert. That alert was visually uncertain. These are clip-level alert rates, not detector precision or recall.
-15. **What false positives were seen?** Pistol boxes over pedestrians in Normal street footage (about 0.40–0.74 confidence), and knife boxes over a large diagonal rail/structure at confidence as high as 0.87. Those boxes did not visibly localize a weapon in the reviewed frames.
-16. **Why keep two-frame confirmation?** It rejects isolated detections, but can miss brief objects. In this cached sample, increasing persistence to three frames did not change the single Violence alert.
-
 ## Limitations and future work
 
 The SCVD sample exposed weak weapon localization and a poor threshold tradeoff. In the latest reduced cache, no threshold in the requested sweep produced a Weaponized police alert; one Violence alert remained and was visually uncertain. Current medical replay produced 0 alerts in 5 Normal clips, but the reduced sample does not revalidate the old 10-clip target. CPU throughput is slow and the full held-out run timed out. The sample has clip labels only, not frame-level ground truth, so it cannot establish object precision, weapon recall, blood accuracy, fall accuracy, or stable tracking IDs. The dashboard has no authentication and is demo-only. Human review is mandatory. See `VERIFICATION.md` for exact results and skipped work.
@@ -169,20 +150,6 @@ The SCVD sample exposed weak weapon localization and a poor threshold tradeoff. 
 `python selftest.py` currently passes 22 unit/API/integration checks plus the mocked frame-loop scenario. `VERIFICATION.md` records the previous 30-clip runs and the latest cached reduced-sample replay. The sample is class-labeled but has no frame-level ground truth.
 
 The tested machine had Python 3.12.6, CPU-only PyTorch 2.12.1+cpu (`cuda.is_available=False`, 2 torch threads), an Intel Core i3-1005G1 CPU, and no GPU. The final 100-frame headless run measured 1.13 FPS. The pipeline is not real-time on this machine.
-
-## Dataset citation placeholder
-
-SCVD (Kaggle): exact dataset title **[fill in from dataset page]**; author/uploader **[fill in]**; license **[fill in from dataset page]**; URL **[fill in]**. Do not guess the license.
-
-## Model provenance
-
-`weights/best.pt` was obtained from a third-party GitHub repository and was not trained by the project author. Fill these details before submission:
-
-- Repository URL: **[user fill in]**
-- Author/maintainer: **[user fill in]**
-- License: **[user fill in from repository]**
-- Training dataset: **[user fill in from repository/model card]**
-
 The project contribution is the surrounding tracking, pose/motion rules, threat and medical logic, filters, evidence workflow, replay evaluation, and dashboards. The pretrained detector weights are an external component.
 
 ## Current cached-round viva answers
